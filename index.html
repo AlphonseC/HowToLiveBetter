@@ -32,6 +32,7 @@
 ]}
 </script>
 <script>(function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark')}catch(e){}})();</script>
+<script src="zh-hant/zh-hant.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1188,7 +1189,8 @@ function renderCard(card, terms, key){
 }
 function apply(){
   const t0 = performance.now();
-  const terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+  // 繁体模式下读者输入的是繁体，先转回简体再比对正文（zh-hant/zh-hant.js）
+  const terms = (window.zhToHans ? zhToHans(state.q) : state.q).toLowerCase().split(/\s+/).filter(Boolean);
   const key = terms.join(' ');
   CUR_TERMS = terms; CUR_KEY = key;
   let shown = 0, rerender = 0, matched = 0; const perSec = {}, tocSec = {};
